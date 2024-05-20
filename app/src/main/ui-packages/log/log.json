@@ -1,0 +1,132 @@
+{
+  "name": "log",
+  "version": 33,
+  "source-key": {
+    "type": "figma",
+    "file": "ZxfjmotHHG80EcFjgV1AIG",
+    "node": "6:8",
+    "version": "5728279085",
+    "component-id": "6fe099c56335c756991cbd6b6f7faaf2a59e0347"
+  },
+  "default": "log",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "adin_component",
+        "id": "log",
+        "key": "log"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 2"
+      },
+      {
+        "type": "text",
+        "id": "LOGIN"
+      }
+    ],
+    "modes": {
+      "log": {
+        "rules": [
+          {
+            "id": "top_level",
+            "is-structured": false,
+            "children": [
+              "log",
+              "Rectangle 2",
+              "LOGIN"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "log",
+            "background": {
+              "alpha": 1.0,
+              "hue": 0.0,
+              "saturation": 0.45112781954887227,
+              "value": 0.5215686274509804
+            }
+          },
+          {
+            "id": "Rectangle 2",
+            "margin": {
+              "left": 88.0,
+              "top": 276.0,
+              "right": 88.0,
+              "bottom": 448.0
+            },
+            "border-radius": 15.0,
+            "tap-handler": "$onClick",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "rectangle_2.svg"
+          },
+          {
+            "id": "LOGIN",
+            "margin": {
+              "left": 116.0,
+              "top": 297.0,
+              "right": 125.0,
+              "bottom": 469.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "color": {
+              "alpha": 1.0,
+              "hue": 0.0,
+              "saturation": 0.0,
+              "value": 1.0
+            },
+            "text-content": "LOGIN",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-align-vertical": "center",
+            "text-size": 32.0,
+            "line-height": 1.1779999732971191,
+            "typeface": "Italiana"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "onClick": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "log",
+      "size": {
+        "width": 360.0,
+        "height": 800.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}
