@@ -16,3 +16,5 @@ local.properties
 settings.gradle.kts
 build.gradle.kts
 AndroidManifest.xml
+google-services.json
+assets-f9ab1-firebase-adminsdk-g7b4m-6e97ce769f.json
