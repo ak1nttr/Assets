@@ -1,10 +1,11 @@
-package com.cse234.assets
+package com.cse234.assets.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -28,13 +28,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.cse234.assets.R
 
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(navController: NavHostController) {
     Column (
         modifier = Modifier
-            .fillMaxSize()
             .background(color = colorResource(id = R.color.login_bg)),
     ){
         HomeScreenTopCard()
@@ -57,27 +58,28 @@ fun HomeScreenBottomTabBar(){
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
+                .fillMaxHeight()
                 .background(colorResource(id = R.color.teal_700))
 
 
 
         ){
             IconButton( // HOME PAGE BUTTON
-                modifier = Modifier.padding(start = 16.dp, bottom = 16.dp),
+                modifier = Modifier.padding(start = 16.dp, bottom = 50.dp),
                 onClick = { /*TODO*/ }
             ) {
                 Icon(Icons.Filled.Home, contentDescription = "Home page", modifier = Modifier.size(40.dp))
             }
 
             IconButton( // ACCOUNT PAGE BUTTON
-                modifier = Modifier.padding(bottom = 16.dp),
+                modifier = Modifier.padding(bottom = 50.dp),
                 onClick = { /*TODO*/ }
             ) {
                 Icon(Icons.Filled.AccountBox , contentDescription = "Account page", modifier = Modifier.size(40.dp))
             }
 
             IconButton( // SETTINGS PAGE BUTTON
-                modifier = Modifier.padding(end = 16.dp, bottom = 16.dp),
+                modifier = Modifier.padding(end = 16.dp, bottom = 50.dp),
                 onClick = { /*TODO*/ }
             ) {
                 Icon(Icons.Filled.Settings, contentDescription = "Settings page", modifier = Modifier.size(40.dp))
