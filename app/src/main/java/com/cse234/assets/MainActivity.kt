@@ -11,6 +11,7 @@ import com.cse234.assets.screens.HomeScreen
 import com.cse234.assets.screens.LoginProcedure
 import com.cse234.assets.screens.LoginScreen
 import com.cse234.assets.screens.RegisterProcedure
+import com.cse234.assets.screens.UserProfileScreen
 import com.cse234.assets.ui.theme.AssetsTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,24 +22,27 @@ class MainActivity : ComponentActivity() {
             AssetsTheme {
 
                 val navController = rememberNavController()
-                HomeScreen(navController =navController)
-//                NavHost(
-//                    navController = navController,
-//                    startDestination = "HomeScreen"
-//                ){
-//                    composable("LoginScreen"){
-//                        LoginScreen(navController = navController)
-//                    }
-//                    composable("LoginProcedure"){
-//                        LoginProcedure(navController = navController)
-//                    }
-//                    composable("RegisterProcedure"){
-//                        RegisterProcedure(navController = navController)
-//                    }
-//                    composable("HomeScreen"){
-//                        HomeScreen(navController = navController)
-//                    }
-//                }
+
+                NavHost(
+                    navController = navController,
+                    startDestination = "LoginScreen"
+                ){
+                    composable("LoginScreen"){
+                        LoginScreen(navController = navController)
+                    }
+                    composable("LoginProcedure"){
+                        LoginProcedure(navController = navController)
+                    }
+                    composable("RegisterProcedure"){
+                        RegisterProcedure(navController = navController)
+                    }
+                    composable("HomeScreen"){
+                        HomeScreen(navController = navController)
+                    }
+                    composable("UserProfileScreen") {
+                        UserProfileScreen(navController = navController)
+                    }
+                }
 
             }
         }

@@ -11,4 +11,7 @@
     <color name="login_bg">#433D3D</color>
     <color name="green">#00B65E</color>
     <color name="white">#FFFFFF</color>
+    <color name="bottom_tab_bar">#D5D1A6</color>
+    <color name="user_page_bg">#EDBC7C</color>
+    <color name="fade_black">#F24A4337</color>
 </resources>

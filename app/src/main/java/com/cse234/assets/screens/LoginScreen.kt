@@ -74,35 +74,9 @@ fun LoginScreen(navController: NavHostController) {
             )
         )
         Image(painter = painterResource(R.drawable.better_health), contentDescription ="logo" )
-        Spacer(modifier = Modifier.height(40.dp))
-        Button( // LOGIN VIA GOOGLE
-            onClick = { /*NAVIGATE*/ },
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .shadow(
-                    elevation = 30.dp,
-                    spotColor = colorResource(R.color.red)
-                )
-            ,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(R.color.black)
-                )
-            ) {
-            Text(
-                text = "Login with Google",
-                color = colorResource(R.color.fade_red),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif
-            )
-            Spacer(modifier = Modifier.width(10.dp))
-            Image(
-                painter = painterResource(R.drawable.google),
-                contentDescription = "google_logo"
-                )
 
-        }
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(40.dp))
+
         Button(
             onClick = { navController.navigate("LoginProcedure") },
             modifier = Modifier

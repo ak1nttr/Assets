@@ -13,7 +13,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -39,13 +42,13 @@ fun HomeScreen(navController: NavHostController) {
             .background(color = colorResource(id = R.color.login_bg)),
     ){
         HomeScreenTopCard()
-        HomeScreenBottomTabBar()
+        HomeScreenBottomTabBar(navController)
 
     }
 }
 
 @Composable
-fun HomeScreenBottomTabBar(){
+private fun HomeScreenBottomTabBar(navController: NavHostController){
 
     Box (
         modifier = Modifier
@@ -59,7 +62,7 @@ fun HomeScreenBottomTabBar(){
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(colorResource(id = R.color.teal_700))
+                .background(colorResource(id = R.color.bottom_tab_bar))
 
 
 
@@ -71,25 +74,25 @@ fun HomeScreenBottomTabBar(){
                 Icon(Icons.Filled.Home, contentDescription = "Home page", modifier = Modifier.size(40.dp))
             }
 
-            IconButton( // ACCOUNT PAGE BUTTON
+            IconButton( // ACTIVITIES PAGE BUTTON
                 modifier = Modifier.padding(bottom = 50.dp),
                 onClick = { /*TODO*/ }
             ) {
-                Icon(Icons.Filled.AccountBox , contentDescription = "Account page", modifier = Modifier.size(40.dp))
+                Icon(Icons.Filled.List , contentDescription = "Activities page", modifier = Modifier.size(40.dp))
             }
 
-            IconButton( // SETTINGS PAGE BUTTON
+            IconButton( // USER PROFILE PAGE BUTTON
                 modifier = Modifier.padding(end = 16.dp, bottom = 50.dp),
-                onClick = { /*TODO*/ }
+                onClick = { navController.navigate("UserProfileScreen") }
             ) {
-                Icon(Icons.Filled.Settings, contentDescription = "Settings page", modifier = Modifier.size(40.dp))
+                Icon(Icons.Filled.Person, contentDescription = "User page", modifier = Modifier.size(40.dp))
             }
         }
     }
 }
 
 @Composable
-fun HomeScreenTopCard(){
+private fun HomeScreenTopCard(){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -105,7 +108,7 @@ fun HomeScreenTopCard(){
         ,
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.teal_700),
+            containerColor = colorResource(id = R.color.fade_red),
             contentColor = Color.Black
         ),
         elevation = CardDefaults.cardElevation(16.dp),
@@ -141,7 +144,7 @@ fun HomeScreenTopCard(){
             ,
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.teal_700),
+                containerColor = colorResource(id = R.color.fade_red),
                 contentColor = Color.Black
             ),
             elevation = CardDefaults.cardElevation(16.dp)
@@ -162,7 +165,7 @@ fun HomeScreenTopCard(){
             ,
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.teal_700),
+                containerColor = colorResource(id = R.color.fade_red),
                 contentColor = Color.Black
             ),
             elevation = CardDefaults.cardElevation(16.dp)
@@ -188,7 +191,7 @@ fun HomeScreenTopCard(){
                 ),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.teal_700),
+                containerColor = colorResource(id = R.color.fade_red),
                 contentColor = Color.Black
             ),
             elevation = CardDefaults.cardElevation(16.dp)
@@ -208,7 +211,7 @@ fun HomeScreenTopCard(){
                 ),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.teal_700),
+                containerColor = colorResource(id = R.color.fade_red),
                 contentColor = Color.Black
             ),
             elevation = CardDefaults.cardElevation(16.dp)
