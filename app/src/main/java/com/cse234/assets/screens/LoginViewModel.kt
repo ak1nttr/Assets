@@ -4,17 +4,12 @@ import android.content.Context
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
-import kotlinx.coroutines.tasks.await
-import kotlin.math.log
+
 
 class LoginViewModel(private val context : Context , private val navController: NavHostController) : ViewModel() {
     private var isLoading = false

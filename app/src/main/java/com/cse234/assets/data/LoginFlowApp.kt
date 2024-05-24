@@ -1,4 +1,4 @@
-package com.cse234.assets.screens
+package com.cse234.assets.data
 
 import android.app.Application
 import com.google.firebase.FirebaseApp

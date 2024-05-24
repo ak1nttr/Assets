@@ -6,7 +6,7 @@
 
 
     <application
-        android:name=".screens.LoginFlowApp"
+        android:name=".data.LoginFlowApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
