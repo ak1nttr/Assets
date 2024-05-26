@@ -18,9 +18,11 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.sharp.List
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
@@ -94,8 +96,8 @@ private fun HomeScreenTopCard(){
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            Text(text = "WELCOME")
-            Text(text = "how are you today?")
+            Text(text = "PAST ACTIVITIES")
+            Text(text = "PROGRESS BAR")
         }
 
     }
@@ -103,7 +105,7 @@ private fun HomeScreenTopCard(){
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ){
-        Card (
+        Card ( // PAST ACTIVITIES
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 2.dp)
                 .size(160.dp, 170.dp)
@@ -122,9 +124,15 @@ private fun HomeScreenTopCard(){
             ),
             elevation = CardDefaults.cardElevation(16.dp)
         ){
-
+            Column (
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                Text(text = "PAST ACTIVITIES")
+            }
         }
-        Card (
+        Card ( // WEIGHT, HEIGHT
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 2.dp)
                 .size(160.dp, 170.dp)
@@ -143,7 +151,15 @@ private fun HomeScreenTopCard(){
             ),
             elevation = CardDefaults.cardElevation(16.dp)
         ){
-
+            Column (
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                Text(text = "WEIGHT")
+                Divider(modifier = Modifier.padding(horizontal = 28.dp, vertical= 5.dp))
+                Text(text = "HEIGHT")
+            }
         }
 
     }
@@ -151,7 +167,7 @@ private fun HomeScreenTopCard(){
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Card(
+        Card( // SLEEP
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 16.dp)
                 .size(160.dp, 170.dp)
@@ -169,9 +185,15 @@ private fun HomeScreenTopCard(){
             ),
             elevation = CardDefaults.cardElevation(16.dp)
         ) {
-
+            Column (
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                Text(text = "SLEEP")
+            }
         }
-        Card(
+        Card( // GOALS
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 16.dp)
                 .size(160.dp, 170.dp)
@@ -189,7 +211,13 @@ private fun HomeScreenTopCard(){
             ),
             elevation = CardDefaults.cardElevation(16.dp)
         ) {
-
+            Column (
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                Text(text = "GOALS")
+            }
         }
     }
 
@@ -205,7 +233,7 @@ fun BottomNavigationBar(
     val backStackEntry = navController.currentBackStackEntryAsState()
     val items : List<BottomNavItem> = listOf(
         BottomNavItem("Home", "HomeScreen", Icons.Filled.Home),
-        BottomNavItem("Activities", "ActivitiesScreen", Icons.Filled.List),
+        BottomNavItem("Activities", "ActivitiesScreen", Icons.Sharp.List),
         BottomNavItem("User", "UserProfileScreen", Icons.Filled.Person)
     )
     NavigationBar (

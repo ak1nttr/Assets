@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.cse234.assets.screens.ActivitiesScreen
 import com.cse234.assets.screens.HomeScreen
 import com.cse234.assets.screens.LoginProcedure
 import com.cse234.assets.screens.LoginScreen
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = "UserProfileScreen"
+                    startDestination = "ActivitiesScreen"
                 ){
                     composable("LoginScreen"){
                         LoginScreen(navController = navController)
@@ -41,6 +42,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("UserProfileScreen") {
                         UserProfileScreen(navController = navController)
+                    }
+                    composable("ActivitiesScreen") {
+                        ActivitiesScreen(navController = navController)
                     }
                 }
 

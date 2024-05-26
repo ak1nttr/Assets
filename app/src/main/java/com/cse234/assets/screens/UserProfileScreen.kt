@@ -20,12 +20,14 @@ import androidx.compose.material.icons.sharp.AccountCircle
 import androidx.compose.material.icons.sharp.ExitToApp
 import androidx.compose.material.icons.twotone.Face
 import androidx.compose.material.icons.twotone.Notifications
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -43,12 +45,48 @@ import com.cse234.assets.R
 @Composable
 fun UserProfileScreen(navController : NavHostController) {
 
-
     Scaffold(
         bottomBar = {
             BottomNavigationBar(navController = navController, onItemClick = { navController.navigate(it.route)})
-        }
-    ) {innerPadding -> // innerPadding is the padding that is applied by the Scaffold
+        },
+        topBar = {
+            Card(//TOP BAR MESSAGE, LOGOUT BUTTON
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 36.dp, horizontal = 24.dp)
+                    .background(color = colorResource(R.color.user_page_bg)),
+                colors = CardDefaults.cardColors(
+                    containerColor = colorResource(R.color.fade_black),
+                    contentColor = colorResource(R.color.white)
+                )
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Me",
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        fontSize = 44.sp, fontFamily = FontFamily.Serif
+                    )
+                    Spacer(modifier = Modifier.width(88.dp))
+                    Button(
+                        onClick = { /*LOGOUT*/ },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(R.color.fade_black),
+                            contentColor = colorResource(R.color.white)
+                        )
+
+                    ) {
+                        Text(text = "LOGOUT")
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Icon(Icons.Sharp.ExitToApp, contentDescription = "logout")
+                    }
+                }
+            }
+        },
+        containerColor = colorResource(R.color.user_page_bg)
+    ) {innerPadding ->
         Column (
             modifier = Modifier
                 .fillMaxSize()
@@ -59,44 +97,7 @@ fun UserProfileScreen(navController : NavHostController) {
                 modifier = Modifier
                     .fillMaxSize()
                     .background(color = colorResource(R.color.user_page_bg))
-                //.padding(horizontal = 24.dp, vertical = 36.dp)
             ) {
-                Card(//TOP BAR MESSAGE, LOGOUT BUTTON
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 36.dp, horizontal = 24.dp)
-                        .background(color = colorResource(R.color.user_page_bg)),
-                    colors = CardDefaults.cardColors(
-                        containerColor = colorResource(R.color.fade_black),
-                        contentColor = colorResource(R.color.white)
-                    )
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "Me",
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                            fontSize = 44.sp, fontFamily = FontFamily.Serif
-                        )
-                        Spacer(modifier = Modifier.width(88.dp))
-                        Button(
-                            onClick = { /*LOGOUT*/ },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = colorResource(R.color.fade_black),
-                                contentColor = colorResource(R.color.white)
-                            )
-
-                        ) {
-                            Text(text = "LOGOUT")
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Icon(Icons.Sharp.ExitToApp, contentDescription = "logout")
-                        }
-                    }
-
-
-                }
 
                 Row(//USER ICON , USER NAME
                     modifier = Modifier
@@ -118,7 +119,7 @@ fun UserProfileScreen(navController : NavHostController) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp , horizontal = 24.dp),
+                        .padding(vertical = 16.dp, horizontal = 24.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {//personal information
                     Image(
@@ -128,13 +129,15 @@ fun UserProfileScreen(navController : NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = "Personal Information")
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    }
                 }
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp , horizontal = 24.dp),
+                        .padding(vertical = 16.dp, horizontal = 24.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {//notifications
                     Image(
@@ -144,13 +147,16 @@ fun UserProfileScreen(navController : NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = "Notifications")
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    }
+
                 }
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp , horizontal = 24.dp),
+                        .padding(vertical = 16.dp, horizontal = 24.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {//about
                     Image(
@@ -160,7 +166,10 @@ fun UserProfileScreen(navController : NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = "About")
-                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
+                    }
+
                 }
 
             }
