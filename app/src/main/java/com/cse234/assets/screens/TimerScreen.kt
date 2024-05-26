@@ -1,0 +1,161 @@
+package com.cse234.assets.screens
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.cse234.assets.R
+import com.cse234.assets.data.formatTime
+
+@Composable
+fun TimerScreenContent(timerViewModel: TimerViewModel) {
+    val timerValue by timerViewModel.timer.collectAsState()
+
+    TimerScreen(
+        timerValue = timerValue,
+        onStartClick = { timerViewModel.startTimer() },
+        onPauseClick = { timerViewModel.pauseTimer() },
+        onStopClick = { timerViewModel.stopTimer() }
+    )
+}
+
+@Composable
+fun TimerScreen(
+    timerValue: Long,
+    onStartClick: () -> Unit,
+    onPauseClick: () -> Unit,
+    onStopClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = colorResource(R.color.user_page_bg)),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row (horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ){
+            Card (
+                modifier = Modifier
+                    .padding(horizontal = 25.dp, vertical = 80.dp)
+                    .size(160.dp, 150.dp)
+                    .shadow(
+                        elevation = 90.dp,
+                        shape = RoundedCornerShape(16.dp),
+                        clip = false,
+                        ambientColor = Color.Green,
+                        spotColor = colorResource(id = R.color.white)
+                    )
+                ,
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = colorResource(id = R.color.login_bg),
+                    contentColor = Color.Black
+                ),
+                elevation = CardDefaults.cardElevation(16.dp)
+            ){
+                Image(painter = painterResource(R.drawable.walking), contentDescription ="logo",
+                    Modifier.size(150.dp).padding(start = 15.dp) )
+            }
+        }
+        Spacer(modifier = Modifier.height(40.dp))
+        Card (
+            modifier = Modifier
+                .padding(horizontal = 25.dp, vertical = 2.dp)
+                .size(160.dp, 50.dp)
+                .shadow(
+                    elevation = 90.dp,
+                    shape = RoundedCornerShape(16.dp),
+                    clip = false,
+                    ambientColor = Color.Green,
+                    spotColor = colorResource(id = R.color.white)
+                )
+            ,
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = colorResource(id = R.color.login_bg),
+                contentColor = Color.Black
+            ),
+            elevation = CardDefaults.cardElevation(16.dp)
+        ){
+            Text(text = timerValue.formatTime(),
+                fontSize = 24.sp,
+                modifier = Modifier.padding(horizontal = 30.dp, vertical = 8.dp),
+                color = colorResource(R.color.user_page_bg)
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Spacer(modifier = Modifier.width(50.dp))
+            startButton (onStartClick)
+            Spacer(modifier = Modifier.width(30.dp))
+            pauseButton (onPauseClick)
+
+            Spacer(modifier = Modifier.width(30.dp))
+            stopButton (onStopClick)
+        }
+    }
+
+}
+
+@Composable
+fun startButton(onStartClick: () -> Unit){
+    IconButton(onClick =  onStartClick ,
+        modifier = Modifier
+            .size(75.dp)
+            .fillMaxSize(),
+    ) {
+        Image(painter = painterResource(R.drawable.play_button), contentDescription ="logo",
+            Modifier.size(75.dp) )
+    }
+}
+@Composable
+fun pauseButton(onPauseClick: () -> Unit){
+    IconButton(onClick =  onPauseClick ,
+        modifier = Modifier
+            .size(75.dp)
+            .fillMaxSize(),
+    ) {
+        Image(painter = painterResource(R.drawable.pause_button), contentDescription ="logo" ,
+            Modifier.size(75.dp))
+    }
+}
+
+@Composable
+fun stopButton(onStopClick: () -> Unit):Long{
+    IconButton(onClick =  onStopClick ,
+        modifier = Modifier
+            .size(75.dp)
+            .fillMaxSize(),
+    ) {
+        Image(painter = painterResource(R.drawable.stop_button), contentDescription ="logo" ,
+            Modifier.size(75.dp))
+    }
+    return System.currentTimeMillis()
+}

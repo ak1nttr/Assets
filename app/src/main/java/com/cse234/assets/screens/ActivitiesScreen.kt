@@ -153,7 +153,7 @@ fun ActivitiesScreen(navController : NavHostController) {
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(text = "Exercise history")
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = { navController.navigate("TimerScreen") }) {
                     Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
                 }
             }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,6 +13,8 @@ import com.cse234.assets.screens.HomeScreen
 import com.cse234.assets.screens.LoginProcedure
 import com.cse234.assets.screens.LoginScreen
 import com.cse234.assets.screens.RegisterProcedure
+import com.cse234.assets.screens.TimerScreenContent
+import com.cse234.assets.screens.TimerViewModel
 import com.cse234.assets.screens.UserProfileScreen
 import com.cse234.assets.ui.theme.AssetsTheme
 
@@ -23,7 +26,7 @@ class MainActivity : ComponentActivity() {
             AssetsTheme {
 
                 val navController = rememberNavController()
-
+                val timerViewModel: TimerViewModel by viewModels()
                 NavHost(
                     navController = navController,
                     startDestination = "LoginScreen"
@@ -46,8 +49,10 @@ class MainActivity : ComponentActivity() {
                     composable("ActivitiesScreen") {
                         ActivitiesScreen(navController = navController)
                     }
+                    composable("TimerScreen"){
+                        TimerScreenContent(timerViewModel)
+                    }
                 }
-
             }
         }
     }
