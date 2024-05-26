@@ -1,5 +1,7 @@
 package com.cse234.assets.screens
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -45,9 +47,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.cse234.assets.R
+import com.cse234.assets.data.ActivityData
+import com.google.firebase.Firebase
+import com.google.firebase.app
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
 @Composable
 fun ActivitiesScreen(navController : NavHostController) {
+    val db = Firebase.firestore
+    val user = FirebaseAuth.getInstance().currentUser
+    val userId = user?.uid
+
+    val startTime = System.currentTimeMillis()
+    val endTime = startTime + 30 * 60 * 1000 // 30 dakika sonrası
+    val duration = endTime - startTime
+
+
+    val exampleData = userId?.let {
+        ActivityData(
+            userId = it,
+            activityType = "Swimming",
+            startTime = startTime,
+            endTime = endTime,
+            duration = duration,
+            distance = 3.0f
+        )
+    }
 
     val activities = listOf(
         "Walk",
@@ -176,7 +203,17 @@ fun ActivitiesScreen(navController : NavHostController) {
                             Text(text = "0.00 km" , fontSize = 28.sp , overflow = TextOverflow.Visible , fontWeight = FontWeight.Light)
                         }
                         Button(
-                            onClick = { /*TODO*/ },
+                            onClick = { exampleData?.let {
+                                db.collection("activities")
+                                    .add(it)
+                                    .addOnSuccessListener {
+                                        Log.d("db", "activity added")
+                                    }
+                                    .addOnFailureListener {
+                                        Log.d("db", "activity could not be added")
+                                    }
+
+                            }},
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(start = 0.dp, top = 100.dp)
@@ -188,9 +225,7 @@ fun ActivitiesScreen(navController : NavHostController) {
 
                             )
                             ) {
-                            TextButton(onClick = { /*TODO*/ }) {
-                                Text(text = "START")
-                            }
+                            Text(text = "START")
                         }
 
                     }
@@ -200,3 +235,5 @@ fun ActivitiesScreen(navController : NavHostController) {
         }
     }
 }
+
+
