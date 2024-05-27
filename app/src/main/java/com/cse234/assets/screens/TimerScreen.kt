@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,17 +31,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cse234.assets.R
+import com.cse234.assets.data.ActivityData
 import com.cse234.assets.data.formatTime
 
 @Composable
-fun TimerScreenContent(timerViewModel: TimerViewModel) {
+fun TimerScreenContent(timerViewModel: TimerViewModel , activityViewModel: ActivityViewModel) {
     val timerValue by timerViewModel.timer.collectAsState()
+    val isLoaded by activityViewModel.isLoaded.collectAsState()
 
     TimerScreen(
         timerValue = timerValue,
         onStartClick = { timerViewModel.startTimer() },
         onPauseClick = { timerViewModel.pauseTimer() },
-        onStopClick = { timerViewModel.stopTimer() }
+        onStopClick = { timerViewModel.stopTimer() },
+        timerViewModel,
+        activityViewModel,
+        isLoaded
     )
 }
 
@@ -48,7 +55,10 @@ fun TimerScreen(
     timerValue: Long,
     onStartClick: () -> Unit,
     onPauseClick: () -> Unit,
-    onStopClick: () -> Unit
+    onStopClick: () -> Unit,
+    timerViewModel: TimerViewModel,
+    activityViewModel: ActivityViewModel,
+    isLoaded : Boolean?
 ) {
     Column(
         modifier = Modifier
@@ -79,7 +89,9 @@ fun TimerScreen(
                 elevation = CardDefaults.cardElevation(16.dp)
             ){
                 Image(painter = painterResource(R.drawable.walking), contentDescription ="logo",
-                    Modifier.size(150.dp).padding(start = 15.dp) )
+                    Modifier
+                        .size(150.dp)
+                        .padding(start = 15.dp) )
             }
         }
         Spacer(modifier = Modifier.height(40.dp))
@@ -118,7 +130,36 @@ fun TimerScreen(
             pauseButton (onPauseClick)
 
             Spacer(modifier = Modifier.width(30.dp))
-            stopButton (onStopClick)
+            stopButton (onStopClick , activityViewModel , timerViewModel)
+        }
+        when(isLoaded) {
+            true -> {
+                Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .size(90.dp)
+                    .padding(start = 50.dp, top = 24.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(20.dp)
+            ){
+                Image(painter = painterResource(R.drawable.approved), contentDescription ="")
+                Text(text = "Successfully Added!")
+            }
+            }
+            false -> {
+                Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .size(90.dp)
+                    .padding(start = 50.dp, top = 24.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(20.dp)
+            ){
+                Image(painter = painterResource(R.drawable.error), contentDescription ="" )
+                Text(text = "Activity could not be saved!")
+            }
+            }
+            else -> {/**/}
         }
     }
 
@@ -148,8 +189,25 @@ fun pauseButton(onPauseClick: () -> Unit){
 }
 
 @Composable
-fun stopButton(onStopClick: () -> Unit):Long{
-    IconButton(onClick =  onStopClick ,
+fun stopButton(onStopClick: () -> Unit , activityViewModel: ActivityViewModel, timerViewModel: TimerViewModel){
+    IconButton(
+        onClick = {
+                  onStopClick
+            val data = activityViewModel.userId?.let {
+                ActivityData(
+                    userId = activityViewModel.userId,
+                    activityType = activityViewModel.selectedActivity,
+                    startTime = timerViewModel.startTime,
+                    endTime = timerViewModel.endTime,
+                    duration = timerViewModel.timer.value,
+                    distance = calculateDistanceForActivity(activityViewModel.selectedActivity , timerViewModel.timer.value)
+                )
+            }
+            data?.let {
+                activityViewModel.loadDataToFireStore(data)
+            }
+
+        } ,
         modifier = Modifier
             .size(75.dp)
             .fillMaxSize(),
@@ -157,5 +215,20 @@ fun stopButton(onStopClick: () -> Unit):Long{
         Image(painter = painterResource(R.drawable.stop_button), contentDescription ="logo" ,
             Modifier.size(75.dp))
     }
-    return System.currentTimeMillis()
+
+}
+
+fun calculateDistanceForActivity(activityType: String, durationInSeconds: Long): Double {
+    val speedInKmPerHour = when (activityType.lowercase()) {
+        "walking" -> 5.0 // 5 km/h
+        "jogging" -> 8.0 // 8 km/h
+        "running" -> 12.0 // 12 km/h
+        "cycling" -> 20.0 // 20 km/h
+        "swimming" -> 2.0 // 2 km/h
+        "yoga" -> 0.0 // yoga typically doesn't cover distance
+        else -> 0.0 // default speed for unknown activities
+    }
+
+    val durationInHours = durationInSeconds / 3600.0
+    return speedInKmPerHour * durationInHours
 }

@@ -6,5 +6,5 @@ data class ActivityData(
     val startTime: Long,
     val endTime: Long,
     val duration: Long,
-    val distance: Float
+    val distance: Double
 )

@@ -41,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -55,29 +56,28 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 @Composable
-fun ActivitiesScreen(navController : NavHostController) {
-    val db = Firebase.firestore
-    val user = FirebaseAuth.getInstance().currentUser
-    val userId = user?.uid
+fun ActivitiesScreen(navController : NavHostController , activityViewModel: ActivityViewModel) {
+//    val db = activityViewModel.db
+//    val userId = activityViewModel.userId
 
-    val startTime = System.currentTimeMillis()
-    val endTime = startTime + 30 * 60 * 1000 // 30 dakika sonrası
-    val duration = endTime - startTime
+//    val startTime = System.currentTimeMillis()
+//    val endTime = startTime + 30 * 60 * 1000
+//    val duration = endTime - startTime
 
 
-    val exampleData = userId?.let {
-        ActivityData(
-            userId = it,
-            activityType = "Swimming",
-            startTime = startTime,
-            endTime = endTime,
-            duration = duration,
-            distance = 3.0f
-        )
-    }
+//    val exampleData = userId?.let {
+//        ActivityData(
+//            userId = it,
+//            activityType = "Swimming",
+//            startTime = timerViewModel.startTime,
+//            endTime = timerViewModel.endTime,
+//            duration = timerViewModel.timer.value,
+//            distance = calculateDistanceForActivity("Running")
+//        )
+//    }
 
     val activities = listOf(
-        "Walk",
+        "Walking",
         "Jogging",
         "Running",
         "Cycling",
@@ -95,7 +95,7 @@ fun ActivitiesScreen(navController : NavHostController) {
                     .padding(horizontal = 24.dp, vertical = 36.dp),
                 fontSize = 44.sp, fontFamily = FontFamily.Serif,
                 color = colorResource(R.color.black)
-                )
+            )
         },
         containerColor = colorResource(R.color.user_page_bg)
     ){innerPadding ->
@@ -145,15 +145,15 @@ fun ActivitiesScreen(navController : NavHostController) {
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
                 verticalAlignment = Alignment.CenterVertically
-            ) {//personal information
+            ) {
                 Image(
                     Icons.TwoTone.DateRange,
-                    contentDescription = "personal info",
+                    contentDescription = "",
                     modifier = Modifier.size(30.dp)
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(text = "Exercise history")
-                IconButton(onClick = { navController.navigate("TimerScreen") }) {
+                IconButton(onClick = { /*TODO*/ }) {
                     Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
                 }
             }
@@ -162,7 +162,7 @@ fun ActivitiesScreen(navController : NavHostController) {
                 .height(2.dp)
                 .width(350.dp),
                 color = colorResource(R.color.black)
-                )
+            )
             Box (
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -203,17 +203,10 @@ fun ActivitiesScreen(navController : NavHostController) {
                             Text(text = "0.00 km" , fontSize = 28.sp , overflow = TextOverflow.Visible , fontWeight = FontWeight.Light)
                         }
                         Button(
-                            onClick = { exampleData?.let {
-                                db.collection("activities")
-                                    .add(it)
-                                    .addOnSuccessListener {
-                                        Log.d("db", "activity added")
-                                    }
-                                    .addOnFailureListener {
-                                        Log.d("db", "activity could not be added")
-                                    }
-
-                            }},
+                            onClick = {
+                                activityViewModel.selectedActivity = selectedActivity.value
+                                navController.navigate("TimerScreen")
+                                      },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(start = 0.dp, top = 100.dp)
@@ -224,8 +217,8 @@ fun ActivitiesScreen(navController : NavHostController) {
                                 contentColor = colorResource(R.color.black)
 
                             )
-                            ) {
-                            Text(text = "START")
+                        ) {
+                            Text(text = "NEW ACTIVITY" , fontSize = 24.sp , fontWeight = FontWeight.Light)
                         }
 
                     }
