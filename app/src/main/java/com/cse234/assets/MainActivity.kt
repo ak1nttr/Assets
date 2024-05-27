@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 val activityViewModel : ActivityViewModel by viewModels()
                 NavHost(
                     navController = navController,
-                    startDestination = "LoginScreen"
+                    startDestination = "TimerScreen"
                 ){
                     composable("LoginScreen"){
                         LoginScreen(navController = navController)
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
                         ActivitiesScreen(navController = navController,activityViewModel)
                     }
                     composable("TimerScreen"){
-                        TimerScreenContent(timerViewModel ,activityViewModel)
+                        TimerScreenContent(timerViewModel ,activityViewModel , navController)
                     }
                 }
             }

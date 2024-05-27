@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -30,12 +31,15 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
 import com.cse234.assets.R
 import com.cse234.assets.data.ActivityData
 import com.cse234.assets.data.formatTime
 
 @Composable
-fun TimerScreenContent(timerViewModel: TimerViewModel , activityViewModel: ActivityViewModel) {
+fun TimerScreenContent(timerViewModel: TimerViewModel , activityViewModel: ActivityViewModel , navController: NavHostController) {
     val timerValue by timerViewModel.timer.collectAsState()
     val isLoaded by activityViewModel.isLoaded.collectAsState()
 
@@ -46,7 +50,8 @@ fun TimerScreenContent(timerViewModel: TimerViewModel , activityViewModel: Activ
         onStopClick = { timerViewModel.stopTimer() },
         timerViewModel,
         activityViewModel,
-        isLoaded
+        isLoaded,
+        navController
     )
 }
 
@@ -58,7 +63,8 @@ fun TimerScreen(
     onStopClick: () -> Unit,
     timerViewModel: TimerViewModel,
     activityViewModel: ActivityViewModel,
-    isLoaded : Boolean?
+    isLoaded : Boolean?,
+    navController: NavHostController
 ) {
     Column(
         modifier = Modifier
@@ -66,6 +72,24 @@ fun TimerScreen(
             .background(color = colorResource(R.color.user_page_bg)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            IconButton(onClick = {
+                if (navController.previousBackStackEntry != null) {
+                    navController.popBackStack()
+                }
+            },modifier = Modifier
+                .padding(start = 10.dp , top = 26.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack, // Replace with your back arrow icon
+                    contentDescription = "Back",
+                    tint = Color.Black
+                )
+            }
+        }
         Row (horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ){
