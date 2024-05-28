@@ -31,6 +31,7 @@ import com.cse234.assets.screens.ActivityViewModel
 fun ActivityHistoryScreen(activityViewModel: ActivityViewModel , navController: NavHostController) {
     val activities by activityViewModel.activities.collectAsState()
     val scrollState = rememberScrollState()
+    // deneme deneme
 
     Column (
         modifier = Modifier
