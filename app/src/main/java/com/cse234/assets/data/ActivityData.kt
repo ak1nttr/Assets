@@ -7,4 +7,6 @@ data class ActivityData(
     val endTime: Long,
     val duration: Long,
     val distance: Double
-)
+){
+    constructor() : this("", "", 0L, 0L, 0L, 0.0)
+}

@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cse234.assets.screens.ActivitiesScreen
+import com.cse234.assets.screens.ActivityHistoryScreen
 import com.cse234.assets.screens.ActivityViewModel
 import com.cse234.assets.screens.HomeScreen
 import com.cse234.assets.screens.LoginProcedure
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 val activityViewModel : ActivityViewModel by viewModels()
                 NavHost(
                     navController = navController,
-                    startDestination = "TimerScreen"
+                    startDestination = "LoginScreen"
                 ){
                     composable("LoginScreen"){
                         LoginScreen(navController = navController)
@@ -53,6 +54,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("TimerScreen"){
                         TimerScreenContent(timerViewModel ,activityViewModel , navController)
+                    }
+                    composable("ActivityHistoryScreen"){
+                        ActivityHistoryScreen(activityViewModel , navController)
                     }
                 }
             }

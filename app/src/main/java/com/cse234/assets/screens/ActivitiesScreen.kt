@@ -57,24 +57,7 @@ import com.google.firebase.firestore.firestore
 
 @Composable
 fun ActivitiesScreen(navController : NavHostController , activityViewModel: ActivityViewModel) {
-//    val db = activityViewModel.db
-//    val userId = activityViewModel.userId
 
-//    val startTime = System.currentTimeMillis()
-//    val endTime = startTime + 30 * 60 * 1000
-//    val duration = endTime - startTime
-
-
-//    val exampleData = userId?.let {
-//        ActivityData(
-//            userId = it,
-//            activityType = "Swimming",
-//            startTime = timerViewModel.startTime,
-//            endTime = timerViewModel.endTime,
-//            duration = timerViewModel.timer.value,
-//            distance = calculateDistanceForActivity("Running")
-//        )
-//    }
 
     val activities = listOf(
         "Walking",
@@ -146,14 +129,18 @@ fun ActivitiesScreen(navController : NavHostController , activityViewModel: Acti
                     .padding(horizontal = 24.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
+                Image(// SELECTED ACTIVITY HISTORY
                     Icons.TwoTone.DateRange,
                     contentDescription = "",
                     modifier = Modifier.size(30.dp)
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(text = "Exercise history")
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    activityViewModel.selectedActivity = selectedActivity.value
+                    activityViewModel.fetchFromFireStore(activityViewModel.selectedActivity)
+                    navController.navigate("ActivityHistoryScreen")
+                }) {
                     Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
                 }
             }
