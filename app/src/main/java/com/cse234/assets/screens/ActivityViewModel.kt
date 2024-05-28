@@ -49,11 +49,16 @@ class ActivityViewModel : ViewModel(){
             }
             .addOnFailureListener {
                 Log.d("db_fetch", "could not fetch activities")
+                Log.d("db_fetch", it.message.toString())
             }
         }
 
 
     }
+    fun resetIsLoaded(){
+        _isLoaded.value = null
+    }
+
 
 
 }

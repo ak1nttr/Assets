@@ -37,6 +37,8 @@ import androidx.navigation.NavHostController
 import com.cse234.assets.R
 import com.cse234.assets.data.ActivityData
 import com.cse234.assets.data.formatTime
+import kotlinx.coroutines.delay
+import java.util.Date
 
 @Composable
 fun TimerScreenContent(timerViewModel: TimerViewModel , activityViewModel: ActivityViewModel , navController: NavHostController) {
@@ -78,6 +80,7 @@ fun TimerScreen(
         ) {
             IconButton(onClick = {
                 if (navController.previousBackStackEntry != null) {
+                    activityViewModel.resetIsLoaded()
                     navController.popBackStack()
                 }
             },modifier = Modifier
@@ -216,7 +219,7 @@ fun pauseButton(onPauseClick: () -> Unit){
 fun stopButton(onStopClick: () -> Unit , activityViewModel: ActivityViewModel, timerViewModel: TimerViewModel){
     IconButton(
         onClick = {
-                  onStopClick
+                  onStopClick()
             val data = activityViewModel.userId?.let {
                 ActivityData(
                     userId = activityViewModel.userId,
@@ -224,13 +227,13 @@ fun stopButton(onStopClick: () -> Unit , activityViewModel: ActivityViewModel, t
                     startTime = timerViewModel.startTime,
                     endTime = timerViewModel.endTime,
                     duration = timerViewModel.timer.value,
-                    distance = calculateDistanceForActivity(activityViewModel.selectedActivity , timerViewModel.timer.value)
+                    distance = calculateDistanceForActivity(activityViewModel.selectedActivity , timerViewModel.timer.value),
+                    date = Date()
                 )
             }
             data?.let {
                 activityViewModel.loadDataToFireStore(data)
             }
-
         } ,
         modifier = Modifier
             .size(75.dp)
