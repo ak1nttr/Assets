@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 val activityViewModel : ActivityViewModel by viewModels()
                 NavHost(
                     navController = navController,
-                    startDestination = "LoginScreen"
+                    startDestination = "HomeScreen"
                 ){
                     composable("LoginScreen"){
                         LoginScreen(navController = navController)
