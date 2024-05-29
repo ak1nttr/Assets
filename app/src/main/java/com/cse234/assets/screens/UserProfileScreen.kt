@@ -32,6 +32,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -41,9 +44,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.cse234.assets.R
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 @Composable
 fun UserProfileScreen(navController : NavHostController) {
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = remember {
+        mutableStateOf(auth.currentUser)
+    }
+    LaunchedEffect(key1 = auth) {
+        currentUser.value = auth.currentUser
+    }
 
     Scaffold(
         bottomBar = {
@@ -71,7 +84,10 @@ fun UserProfileScreen(navController : NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(88.dp))
                     Button(
-                        onClick = { /*LOGOUT*/ },
+                        onClick = {
+                                  FirebaseAuth.getInstance().signOut()
+                            navController.navigate("LoginScreen")
+                        },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = colorResource(R.color.fade_black),
                             contentColor = colorResource(R.color.white)
@@ -111,7 +127,8 @@ fun UserProfileScreen(navController : NavHostController) {
                         contentDescription = "user_logo",
                         modifier = Modifier.size(100.dp)
                     )
-                    Text(text = "User Name", fontSize = 32.sp, fontFamily = FontFamily.Serif)
+                    val displayName = currentUser.value?.displayName ?: "User Name"
+                    Text(text = displayName, fontSize = 32.sp, fontFamily = FontFamily.Serif)
                 }
 
 
