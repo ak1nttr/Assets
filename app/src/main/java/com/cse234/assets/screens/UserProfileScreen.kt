@@ -47,15 +47,16 @@ import com.cse234.assets.R
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
 fun UserProfileScreen(navController : NavHostController) {
     val auth = FirebaseAuth.getInstance()
-    val currentUser = remember {
-        mutableStateOf(auth.currentUser)
-    }
+    val currentUser = remember { mutableStateOf(auth.currentUser) }
+    val displayName = remember { mutableStateOf("User Name") }
     LaunchedEffect(key1 = auth) {
         currentUser.value = auth.currentUser
+        displayName.value = currentUser.value?.displayName ?: "User Name"
     }
 
     Scaffold(
