@@ -4,15 +4,21 @@ import android.content.Context
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
+
 import androidx.lifecycle.ViewModel
+
 import androidx.navigation.NavHostController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 
 
+
 class LoginViewModel(private val context : Context , private val navController: NavHostController) : ViewModel() {
     private var isLoading = false
+    private val auth = FirebaseAuth.getInstance()
+    private val db = Firebase.firestore
+
 
     fun signUp(email: String , password: String ,firstName : String, lastName : String){
        if (!isLoading && isValidEmail(email)){
@@ -22,8 +28,6 @@ class LoginViewModel(private val context : Context , private val navController: 
        }
     }
    private fun createUserInFirebase(email : String , password : String , firstName : String, lastName : String){
-        val auth = FirebaseAuth.getInstance()
-        val db = Firebase.firestore
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
@@ -87,13 +91,14 @@ class LoginViewModel(private val context : Context , private val navController: 
     }
     private fun signInUserInFirebase(email : String , password : String){
 
-        FirebaseAuth.getInstance()
+        auth
             .signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful){
                 Log.d("SIGNIN", "signInWithEmail --->")
                 Log.d("SIGNIN", "Is Successful : ${it.isSuccessful}")
-                Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(context, "User Login Successful", Toast.LENGTH_SHORT).show()
                 navController.navigate("HomeScreen")
                 }else {
                     Log.d("SIGNIN", "signInWithEmail:failure")
@@ -107,4 +112,5 @@ class LoginViewModel(private val context : Context , private val navController: 
     private fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
+
 }
