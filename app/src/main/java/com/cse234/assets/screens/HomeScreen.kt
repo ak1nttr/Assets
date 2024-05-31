@@ -1,8 +1,11 @@
 package com.cse234.assets.screens
 
+import android.widget.ImageButton
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +39,7 @@ import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,13 +49,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -76,14 +85,14 @@ fun HomeScreen(navController: NavHostController) {
                 .padding(innerPadding)
                 .background(colorResource(id = R.color.home_screen_bg))
         ){
-            HomeScreenTopCard()
+            HomeScreenTopCard(navController)
         }
 
     }
 }
 
 @Composable
-private fun HomeScreenTopCard(){
+private fun HomeScreenTopCard(navController: NavHostController){
     Spacer(modifier = Modifier.height(30.dp))
     CircularProgressBar(
         timePercantage = 15/45f,
@@ -110,19 +119,26 @@ private fun HomeScreenTopCard(){
                     spotColor = colorResource(id = R.color.white)
                 )
             ,
+            border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.login_bg),
+                containerColor = colorResource(id = R.color.running_bg),
                 contentColor = Color.Black
             ),
             elevation = CardDefaults.cardElevation(16.dp)
         ){
             Column (
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Text(text = "PAST ACTIVITIES")
+                Text(text = "PAST ACTIVITIES" ,color= colorResource(R.color.white), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier.size(90.dp)
+                    ) {
+                    Image(painter = painterResource(id = R.drawable.running), contentDescription ="" )
+                }
             }
         }
         Card ( // WEIGHT, HEIGHT
@@ -137,21 +153,28 @@ private fun HomeScreenTopCard(){
                     spotColor = colorResource(id = R.color.white)
                 )
             ,
+            border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.login_bg),
+                containerColor = colorResource(id = R.color.weight_bg),
                 contentColor = Color.Black
             ),
             elevation = CardDefaults.cardElevation(16.dp)
         ){
             Column (
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Text(text = "WEIGHT")
-                Divider(modifier = Modifier.padding(horizontal = 28.dp, vertical= 5.dp))
-                Text(text = "HEIGHT")
+                Text(text = "WEIGHT" , color = colorResource(R.color.weight_text), modifier = Modifier.padding(top = 10.dp), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
+                Text(text = "HEIGHT" ,color = colorResource(R.color.weight_text), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
+                Image(
+                    painter = painterResource(id = R.drawable.diet),
+                    contentDescription ="" ,
+                    modifier = Modifier
+                        .clickable { navController.navigate("NotificationScreen") }
+                        .size(80.dp)
+                )
             }
         }
 
@@ -171,19 +194,26 @@ private fun HomeScreenTopCard(){
                     ambientColor = Color.Green,
                     spotColor = colorResource(id = R.color.white)
                 ),
+            border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.login_bg),
+                containerColor = colorResource(id = R.color.sleep_bg),
                 contentColor = Color.Black
             ),
             elevation = CardDefaults.cardElevation(16.dp)
         ) {
             Column (
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Text(text = "SLEEP")
+                Text(text = "SLEEP" , color = colorResource(R.color.sleep_text),fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier.size(90.dp)
+                ) {
+                    Image(painter = painterResource(id = R.drawable.night), contentDescription ="" )
+                }
             }
         }
         Card( // GOALS
@@ -197,19 +227,27 @@ private fun HomeScreenTopCard(){
                     ambientColor = Color.Green,
                     spotColor = colorResource(id = R.color.white)
                 ),
+            border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.login_bg),
+                containerColor = colorResource(id = R.color.energy_bg),
                 contentColor = Color.Black
             ),
             elevation = CardDefaults.cardElevation(16.dp)
         ) {
             Column (
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Text(text = "GOALS")
+                Text(text = "ENERGY" , color = colorResource(R.color.energy_text),fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
+                Text(text = "CONSUMPTION" ,color = colorResource(R.color.energy_text), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier.size(90.dp)
+                ) {
+                    Image(painter = painterResource(id = R.drawable.calories), contentDescription ="" )
+                }
             }
         }
     }
@@ -312,6 +350,7 @@ fun CircularProgressBar(
                 spotColor = colorResource(id = R.color.white)
             )
         ,
+        border = CardDefaults.outlinedCardBorder(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.login_bg),
