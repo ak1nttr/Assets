@@ -14,6 +14,7 @@ import com.cse234.assets.screens.ActivityViewModel
 import com.cse234.assets.screens.HomeScreen
 import com.cse234.assets.screens.LoginProcedure
 import com.cse234.assets.screens.LoginScreen
+import com.cse234.assets.screens.NotificationScreen
 import com.cse234.assets.screens.RegisterProcedure
 import com.cse234.assets.screens.TimerScreenContent
 import com.cse234.assets.screens.TimerViewModel
@@ -57,6 +58,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("ActivityHistoryScreen"){
                         ActivityHistoryScreen(activityViewModel , navController)
+                    }
+                    composable("NotificationScreen"){
+                        NotificationScreen(navController)
                     }
                 }
             }

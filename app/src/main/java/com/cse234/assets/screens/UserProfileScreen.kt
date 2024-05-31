@@ -187,7 +187,7 @@ fun UserProfileScreen(navController : NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = "Notifications")
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { navController.navigate("NotificationScreen") }) {
                         Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
                     }
 
