@@ -51,6 +51,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
@@ -83,7 +84,15 @@ fun HomeScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(colorResource(id = R.color.home_screen_bg))
+                .background(
+                    //    colorResource(id = R.color.home_screen_bg)
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            colorResource(R.color.weight_text),
+                            colorResource(R.color.user_page_bg)
+                        )
+                    )
+                )
         ){
             HomeScreenTopCard(navController)
         }
