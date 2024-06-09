@@ -1,7 +1,6 @@
 package com.cse234.assets.screens
 
-import android.util.Log
-import android.widget.Toast
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.twotone.ArrowForward
 import androidx.compose.material.icons.twotone.DateRange
-import androidx.compose.material.icons.twotone.Face
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -36,7 +34,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -45,29 +42,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.cse234.assets.R
-import com.cse234.assets.data.ActivityData
-import com.google.firebase.Firebase
-import com.google.firebase.app
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
 
 @Composable
 fun ActivitiesScreen(navController : NavHostController , activityViewModel: ActivityViewModel) {
 
+    LaunchedEffect(Unit) {
+        activityViewModel.fetchDailyActivities()
+    }
+
     val coroutineScope = rememberCoroutineScope()
 
-    val totalDistance = remember {
-        mutableStateOf(activityViewModel.calculateTotalDistanceForToday())
+    val totalDistance = remember { mutableStateOf("0.0") }
+
+    LaunchedEffect(activityViewModel.dailyActivities.collectAsState().value) {
+        totalDistance.value = activityViewModel.calculateTotalDistance()
     }
+
 
 
     val activities = listOf(
@@ -116,6 +113,7 @@ fun ActivitiesScreen(navController : NavHostController , activityViewModel: Acti
                         TextButton(
                             onClick = {
                                 selectedActivity.value = activity
+                                activityViewModel.selectedActivity = selectedActivity.value
                             },
                             colors = if(isSelected) {
                                 ButtonDefaults.textButtonColors(
@@ -148,7 +146,6 @@ fun ActivitiesScreen(navController : NavHostController , activityViewModel: Acti
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(text = "Exercise history")
                 IconButton(onClick = {
-                    activityViewModel.selectedActivity = selectedActivity.value
                     coroutineScope.launch {
                         activityViewModel.fetchFromFireStore(activityViewModel.selectedActivity)
                     }
@@ -200,7 +197,7 @@ fun ActivitiesScreen(navController : NavHostController , activityViewModel: Acti
                         ) {
                             Text(text = "total distance" , fontWeight = FontWeight.Light , fontSize = 20.sp)
                             Icon(Icons.TwoTone.ArrowForward, contentDescription = "")
-                            Text(text = String.format("%.1f", totalDistance.value * 1000)+"m", fontSize = 18.sp , overflow = TextOverflow.Visible , fontWeight = FontWeight.Light)
+                            Text(text = totalDistance.value+"m", fontSize = 18.sp , overflow = TextOverflow.Visible , fontWeight = FontWeight.Light)
                         }
                         Button(
                             onClick = {

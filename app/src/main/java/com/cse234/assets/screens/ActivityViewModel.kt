@@ -1,5 +1,6 @@
 package com.cse234.assets.screens
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,6 +25,7 @@ class ActivityViewModel : ViewModel(){
     private val _activities = MutableStateFlow<List<ActivityData>>(emptyList())
     val activities : StateFlow<List<ActivityData>> = _activities.asStateFlow()
     private val _dailyActivities = MutableStateFlow<List<ActivityData>>(emptyList())
+    val dailyActivities : StateFlow<List<ActivityData>> = _dailyActivities.asStateFlow()
 
 
 
@@ -33,11 +35,11 @@ class ActivityViewModel : ViewModel(){
             db.collection("activities")
                 .add(it)
                 .addOnSuccessListener {
-                    Log.d("db", "activity added")
+                    Log.d("db_load", "activity added")
                     _isLoaded.value = true
                 }
                 .addOnFailureListener {
-                    Log.d("db", "activity could not be added")
+                    Log.d("db_load", "activity could not be added")
                     _isLoaded.value = false
                 }
         }
@@ -65,45 +67,43 @@ class ActivityViewModel : ViewModel(){
         _isLoaded.value = null
     }
 
-
-    fun calculateTotalDistanceForToday() : Double{
-        if (_dailyActivities.value.isEmpty()) {
-            viewModelScope.launch {
-                db.collection("activities")
-                    .whereEqualTo("userId", userId)
-                    .get()
-                    .addOnSuccessListener { result ->
-                        Log.d("fetchAllActivities", "Fetched ${result.documents.size} activities")
-                        _dailyActivities.value = result.documents.mapNotNull { it.toObject(ActivityData::class.java) }
-                    }
-                    .addOnFailureListener {
-                        Log.e("fetchAllActivities", "Error fetching activities", it)
-                    }
-            }
-        }
-        return updateTotalDistance()
-    }
-    private fun updateTotalDistance() : Double {
+    fun fetchDailyActivities() {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
-        val startOfDay = calendar.time
+        val todayStart = calendar.time
 
         calendar.set(Calendar.HOUR_OF_DAY, 23)
         calendar.set(Calendar.MINUTE, 59)
         calendar.set(Calendar.SECOND, 59)
         calendar.set(Calendar.MILLISECOND, 999)
-        val endOfDay = calendar.time
+        val todayEnd = calendar.time
 
-        val result = _dailyActivities.value.filter { activity ->
-            activity.date.after(startOfDay) && activity.date.before(endOfDay)
-        }.sumOf { activity -> activity.distance }
-
-        Log.d("totaldistance", "Total distance is calculated : $result meters")
-
-        return result
+        viewModelScope.launch {
+            db.collection("activities")
+                .whereEqualTo("userId", userId)
+                .whereGreaterThanOrEqualTo("date", todayStart)
+                .whereLessThanOrEqualTo("date", todayEnd)
+                .get()
+                .addOnSuccessListener { result ->
+                    Log.d("db_fetch", "${result.documents.size} daily activities fetched")
+                    _dailyActivities.value = result.documents.mapNotNull { it.toObject(ActivityData::class.java) }
+                }
+                .addOnFailureListener {
+                    Log.d("db_fetch", "could not fetch daily activities")
+                    Log.d("db_fetch", it.message.toString())
+                }
+        }
     }
+    @SuppressLint("DefaultLocale")
+    fun calculateTotalDistance() : String {
+        val totalDistance = dailyActivities.value.sumOf { it.distance }
+        Log.d("total_distance", "${totalDistance *1000} m calculated")
+        return String.format("%.1f", totalDistance*1000)
+    }
+
+
 }
 
