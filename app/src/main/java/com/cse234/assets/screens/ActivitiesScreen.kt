@@ -53,7 +53,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun ActivitiesScreen(navController : NavHostController , activityViewModel: ActivityViewModel) {
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(Unit) {//aynısını energy consumption sayfasına da yaz 
+        activityViewModel.clearDailyActivities()
         activityViewModel.fetchDailyActivities()
     }
 

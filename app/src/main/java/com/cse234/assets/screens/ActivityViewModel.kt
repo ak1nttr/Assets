@@ -104,6 +104,9 @@ class ActivityViewModel : ViewModel(){
         return String.format("%.1f", totalDistance*1000)
     }
 
+    fun clearDailyActivities(){
+        _dailyActivities.value = emptyList()
+    }
 
 }
 
