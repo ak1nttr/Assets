@@ -239,7 +239,7 @@ private fun HomeScreenTopCard(navController: NavHostController){
             border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.energy_bg),
+                containerColor = colorResource(id = R.color.energy_bg1),
                 contentColor = Color.Black
             ),
             elevation = CardDefaults.cardElevation(16.dp)
@@ -253,9 +253,9 @@ private fun HomeScreenTopCard(navController: NavHostController){
                 Text(text = "CONSUMPTION" ,color = colorResource(R.color.energy_text), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 IconButton(
                     onClick = { /*TODO*/ },
-                    modifier = Modifier.size(90.dp)
+                    modifier = Modifier.size(80.dp)
                 ) {
-                    Image(painter = painterResource(id = R.drawable.calories), contentDescription ="" )
+                    Image(painter = painterResource(id = R.drawable.reduce), contentDescription ="" )
                 }
             }
         }
