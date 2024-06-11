@@ -27,5 +27,6 @@
     <color name="weight_text">#132745</color>
     <color name="energy_text">#FEE45A</color>
     <color name="energy_bg1">#E8A975</color>
+    <color name="gray">#6C6262</color>
 
 </resources>

@@ -225,7 +225,7 @@ private fun HomeScreenTopCard(navController: NavHostController){
                 }
             }
         }
-        Card( // GOALS
+        Card(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 16.dp)
                 .size(160.dp, 170.dp)
@@ -235,7 +235,8 @@ private fun HomeScreenTopCard(navController: NavHostController){
                     clip = false,
                     ambientColor = Color.Green,
                     spotColor = colorResource(id = R.color.white)
-                ),
+                )
+                .clickable { navController.navigate("EnergyConsumptionScreen") },
             border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
@@ -252,7 +253,7 @@ private fun HomeScreenTopCard(navController: NavHostController){
                 Text(text = "ENERGY" , color = colorResource(R.color.energy_text),fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 Text(text = "CONSUMPTION" ,color = colorResource(R.color.energy_text), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { navController.navigate("EnergyConsumptionScreen") },
                     modifier = Modifier.size(80.dp)
                 ) {
                     Image(painter = painterResource(id = R.drawable.reduce), contentDescription ="" )
@@ -357,22 +358,30 @@ fun CircularProgressBar(
                 clip = false,
                 ambientColor = Color.Green,
                 spotColor = colorResource(id = R.color.white)
-            )
-        ,
+            ),
         border = CardDefaults.outlinedCardBorder(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.login_bg),
-            contentColor = Color.Black
-        ),
         elevation = CardDefaults.cardElevation(16.dp),
 
         ){
-        Row (modifier = Modifier.fillMaxSize()){
+        Row (
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            colorResource(R.color.teal_700),
+                            colorResource(R.color.gray),
+                            colorResource(R.color.sleep_bg)
+                        )
+                    ),
+                    shape = RoundedCornerShape(16.dp)
+                )
+        ){
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.padding(vertical =40.dp, horizontal = 30.dp)
-
+                modifier = Modifier
+                    .padding(vertical =40.dp, horizontal = 30.dp)
             ){
                 androidx.compose.foundation.Canvas(modifier = Modifier.size(150.dp)) {
                     drawArc(

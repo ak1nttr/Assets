@@ -108,5 +108,11 @@ class ActivityViewModel : ViewModel(){
         _dailyActivities.value = emptyList()
     }
 
+    fun calculateTotalDuration() : String {
+        val totalDuration = dailyActivities.value.sumOf { it.duration }
+        Log.d("total_duration", "$totalDuration seconds calculated")
+        return totalDuration.toString()
+    }
+
 }
 
