@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                         RegisterProcedure(navController = navController)
                     }
                     composable("HomeScreen"){
-                        HomeScreen(navController = navController)
+                        HomeScreen(navController = navController , activityViewModel = activityViewModel)
                     }
                     composable("UserProfileScreen") {
                         UserProfileScreen(navController = navController)

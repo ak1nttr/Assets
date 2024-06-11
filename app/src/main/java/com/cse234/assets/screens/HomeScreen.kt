@@ -43,7 +43,10 @@ import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -73,7 +76,23 @@ import com.cse234.assets.data.BottomNavItem
 
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController , activityViewModel: ActivityViewModel) {
+    LaunchedEffect(Unit) {
+        activityViewModel.clearDailyActivities()
+        activityViewModel.fetchDailyActivities()
+    }
+
+    val totalDistance = remember { mutableStateOf("0.0") }
+    val totalDuration = remember { mutableStateOf("0")}
+    val totalSteps = remember { mutableIntStateOf(0) }
+    val totalCaloriesBurned = remember { mutableDoubleStateOf(0.0) }
+
+    LaunchedEffect(activityViewModel.dailyActivities.collectAsState().value) {
+        totalDistance.value = activityViewModel.calculateTotalDistance()
+        totalDuration.value = activityViewModel.calculateTotalDuration()
+        totalSteps.intValue = calculateEstimatedSteps(totalDistance.value.toDouble())
+        totalCaloriesBurned.doubleValue = calculateEstimatedCaloriesBurned(totalDuration.value.toLong())
+    }
 
     Scaffold(
         bottomBar = {
@@ -94,22 +113,25 @@ fun HomeScreen(navController: NavHostController) {
                     )
                 )
         ){
-            HomeScreenTopCard(navController)
+            HomeScreenTopCard(navController , totalDuration.value , totalDistance.value , totalCaloriesBurned.doubleValue)
         }
 
     }
 }
 
 @Composable
-private fun HomeScreenTopCard(navController: NavHostController){
+private fun HomeScreenTopCard(navController: NavHostController , totalDuration : String = "0" , totalDistance : String = "0.0" , totalCaloriesBurned : Double = 0.0) {
     Spacer(modifier = Modifier.height(30.dp))
     CircularProgressBar(
-        timePercantage = 15/45f,
-        timeNumber = 45,
-        stepsPercantage =4000/6000f ,
-        stepsNumber = 6000,
-        caloriesPercantage =120/240f ,
-        caloriesNumber = 240
+        timePercantage = totalDuration.toFloat() / 5200,
+        timeNumber = 5200,
+        stepsPercantage = calculateEstimatedSteps(totalDistance.toDouble()) / 10000f,
+        stepsNumber = 10000,
+        caloriesPercantage = totalCaloriesBurned.toFloat() / 1000f,
+        caloriesNumber = 1000,
+        strokeWidth = 8.dp,
+        animDuration = 2500,
+        animDelay = 0
     )
     Spacer(modifier = Modifier.height(30.dp))
     Row (
