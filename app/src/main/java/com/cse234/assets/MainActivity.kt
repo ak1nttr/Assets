@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.cse234.assets.screens.ActivitiesScreen
 import com.cse234.assets.screens.ActivityHistoryScreen
 import com.cse234.assets.screens.ActivityViewModel
-import com.cse234.assets.screens.EnergyConsumptionScreen
+import com.cse234.assets.screens.PastActivitiesScreen
 import com.cse234.assets.screens.HeightWeightScreen
 import com.cse234.assets.screens.HomeScreen
 import com.cse234.assets.screens.LoginProcedure
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                 val activityViewModel : ActivityViewModel by viewModels()
                 NavHost(
                     navController = navController,
-                    startDestination = "LoginScreen"
+                    startDestination = "HomeScreen"
                 ){
                     composable("LoginScreen"){
                         LoginScreen(navController = navController)
@@ -71,8 +71,8 @@ class MainActivity : ComponentActivity() {
                     composable("HeightWeightScreen"){
                         HeightWeightScreen(navController = navController)
                     }
-                    composable("EnergyConsumptionScreen"){
-                        EnergyConsumptionScreen(activityViewModel , navController)
+                    composable("PastActivities"){
+                        PastActivitiesScreen(activityViewModel , navController)
                     }
                 }
             }

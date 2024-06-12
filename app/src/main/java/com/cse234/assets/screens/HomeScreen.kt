@@ -149,6 +149,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                     ambientColor = Color.Green,
                     spotColor = colorResource(id = R.color.white)
                 )
+                .clickable { navController.navigate("PastActivities") }
             ,
             border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
@@ -165,7 +166,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
             ){
                 Text(text = "PAST ACTIVITIES" ,color= colorResource(R.color.white), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = {  },
                     modifier = Modifier.size(90.dp)
                     ) {
                     Image(painter = painterResource(id = R.drawable.running), contentDescription ="" )
@@ -183,6 +184,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                     ambientColor = Color.Green,
                     spotColor = colorResource(id = R.color.white)
                 )
+                .clickable { navController.navigate("HeightWeightScreen") }
             ,
             border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
@@ -203,7 +205,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                     painter = painterResource(id = R.drawable.diet),
                     contentDescription ="" ,
                     modifier = Modifier
-                        .clickable { navController.navigate("NotificationScreen") }
+                        .clickable { }
                         .size(80.dp)
                 )
             }
@@ -258,7 +260,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                     ambientColor = Color.Green,
                     spotColor = colorResource(id = R.color.white)
                 )
-                .clickable { navController.navigate("EnergyConsumptionScreen") },
+                .clickable { navController.navigate("PastActivities") },
             border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
@@ -275,7 +277,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                 Text(text = "ENERGY" , color = colorResource(R.color.energy_text),fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 Text(text = "CONSUMPTION" ,color = colorResource(R.color.energy_text), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 IconButton(
-                    onClick = { navController.navigate("EnergyConsumptionScreen") },
+                    onClick = {  },
                     modifier = Modifier.size(80.dp)
                 ) {
                     Image(painter = painterResource(id = R.drawable.reduce), contentDescription ="" )

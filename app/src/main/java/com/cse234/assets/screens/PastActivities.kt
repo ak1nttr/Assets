@@ -24,7 +24,6 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -36,7 +35,7 @@ import androidx.navigation.NavHostController
 import com.cse234.assets.R
 
 @Composable
-fun EnergyConsumptionScreen(activityViewModel: ActivityViewModel , navController : NavHostController) {
+fun PastActivitiesScreen(activityViewModel: ActivityViewModel, navController : NavHostController) {
     LaunchedEffect(Unit) {
         activityViewModel.clearDailyActivities()
         activityViewModel.fetchDailyActivities()
