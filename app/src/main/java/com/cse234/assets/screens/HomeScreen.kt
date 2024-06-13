@@ -1,5 +1,6 @@
 package com.cse234.assets.screens
 
+import android.util.Log
 import android.widget.ImageButton
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -78,6 +79,7 @@ import com.cse234.assets.data.BottomNavItem
 @Composable
 fun HomeScreen(navController: NavHostController , activityViewModel: ActivityViewModel) {
     LaunchedEffect(Unit) {
+        Log.d("HomeScreen", "LaunchedEffect")
         activityViewModel.clearDailyActivities()
         activityViewModel.fetchDailyActivities()
     }
@@ -88,8 +90,8 @@ fun HomeScreen(navController: NavHostController , activityViewModel: ActivityVie
     val totalCaloriesBurned = remember { mutableDoubleStateOf(0.0) }
 
     LaunchedEffect(activityViewModel.dailyActivities.collectAsState().value) {
-        totalDistance.value = activityViewModel.calculateTotalDistance()
-        totalDuration.value = activityViewModel.calculateTotalDuration()
+        totalDistance.value = activityViewModel.calculateTotalDistance().replace(",", ".")
+        totalDuration.value = activityViewModel.calculateTotalDuration().replace(",", ".")
         totalSteps.intValue = calculateEstimatedSteps(totalDistance.value.toDouble())
         totalCaloriesBurned.doubleValue = calculateEstimatedCaloriesBurned(totalDuration.value.toLong())
     }
@@ -98,13 +100,12 @@ fun HomeScreen(navController: NavHostController , activityViewModel: ActivityVie
         bottomBar = {
             BottomNavigationBar(navController = navController, onItemClick = { navController.navigate(it.route)})
         }
-    ) {innerPadding -> // innerPadding is the padding that is applied by the Scaffold
+    ) {innerPadding ->
         Column (
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .background(
-                    //    colorResource(id = R.color.home_screen_bg)
                     brush = Brush.linearGradient(
                         colors = listOf(
                             colorResource(R.color.weight_text),
@@ -166,7 +167,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
             ){
                 Text(text = "PAST ACTIVITIES" ,color= colorResource(R.color.white), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 IconButton(
-                    onClick = {  },
+                    onClick = { navController.navigate("PastActivities") },
                     modifier = Modifier.size(90.dp)
                     ) {
                     Image(painter = painterResource(id = R.drawable.running), contentDescription ="" )
@@ -205,7 +206,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                     painter = painterResource(id = R.drawable.diet),
                     contentDescription ="" ,
                     modifier = Modifier
-                        .clickable { }
+                        .clickable { navController.navigate("HeightWeightScreen") }
                         .size(80.dp)
                 )
             }
@@ -226,8 +227,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                     clip = false,
                     ambientColor = Color.Green,
                     spotColor = colorResource(id = R.color.white)
-                )
-                .clickable { navController.navigate("SleepScreen") },
+                ),
             border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
@@ -243,7 +243,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
             ){
                 Text(text = "SLEEP" , color = colorResource(R.color.sleep_text),fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 IconButton(
-                    onClick = { navController.navigate("SleepScreen") },
+                    onClick = { /*TODO*/ },
                     modifier = Modifier.size(90.dp)
                 ) {
                     Image(painter = painterResource(id = R.drawable.night), contentDescription ="" )
@@ -261,7 +261,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                     ambientColor = Color.Green,
                     spotColor = colorResource(id = R.color.white)
                 )
-                .clickable { },
+                .clickable { navController.navigate("EnergyConsumptionScreen") },
             border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
@@ -278,7 +278,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                 Text(text = "ENERGY" , color = colorResource(R.color.energy_text),fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 Text(text = "CONSUMPTION" ,color = colorResource(R.color.energy_text), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 IconButton(
-                    onClick = {  },
+                    onClick = { navController.navigate("EnergyConsumptionScreen") },
                     modifier = Modifier.size(80.dp)
                 ) {
                     Image(painter = painterResource(id = R.drawable.reduce), contentDescription ="" )
@@ -302,33 +302,47 @@ fun BottomNavigationBar(
         BottomNavItem("Activities", "ActivitiesScreen", Icons.Sharp.List),
         BottomNavItem("User", "UserProfileScreen", Icons.Filled.Person)
     )
-    NavigationBar (
-        modifier = modifier,
-        containerColor = colorResource(R.color.login_bg),
-        tonalElevation = 10.dp
-    ){
-        items.forEach {
-            val selected = backStackEntry.value?.destination?.route == it.route
-            NavigationBarItem(
-                selected = selected,
-                onClick = { onItemClick(it) },
-                icon = {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
-                        Icon(imageVector = it.icon, contentDescription = it.name)
-                        if (selected){
-                            Text(text = it.name)
-                        }
-                    }
-                       },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = colorResource(R.color.black),
-                    unselectedIconColor = colorResource(R.color.black),
-                    indicatorColor = colorResource(R.color.user_page_bg),
+
+    Box (
+        modifier = modifier.background(
+            brush = Brush.verticalGradient(
+                colors = listOf(
+                    colorResource(R.color.gray),
+                    colorResource(R.color.white),
+                    colorResource(R.color.fade_black)
                 )
             )
-        }
+        )
+    ){
+        NavigationBar (
+            modifier = modifier,
+            containerColor = Color.Transparent,
+            tonalElevation = 10.dp
+        ){
+            items.forEach {
+                val selected = backStackEntry.value?.destination?.route == it.route
+                NavigationBarItem(
+                    selected = selected,
+                    onClick = { onItemClick(it) },
+                    icon = {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
+                            Icon(imageVector = it.icon, contentDescription = it.name)
+                            if (selected){
+                                Text(text = it.name)
+                            }
+                        }
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = colorResource(R.color.black),
+                        unselectedIconColor = colorResource(R.color.black),
+                        indicatorColor = colorResource(R.color.gray),
+                    )
+                )
+            }
 
+        }
     }
+
 }
 @Composable
 fun CircularProgressBar(
@@ -396,7 +410,7 @@ fun CircularProgressBar(
                     brush = Brush.linearGradient(
                         colors = listOf(
                             colorResource(R.color.teal_700),
-                            colorResource(R.color.gray),
+                            colorResource(R.color.bottom_tab_bar),
                             colorResource(R.color.sleep_bg)
                         )
                     ),
