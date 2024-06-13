@@ -206,7 +206,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                     painter = painterResource(id = R.drawable.diet),
                     contentDescription ="" ,
                     modifier = Modifier
-                        .clickable { navController.navigate("HeightWeightScreen")}
+                        .clickable { navController.navigate("HeightWeightScreen") }
                         .size(80.dp)
                 )
             }
@@ -302,33 +302,47 @@ fun BottomNavigationBar(
         BottomNavItem("Activities", "ActivitiesScreen", Icons.Sharp.List),
         BottomNavItem("User", "UserProfileScreen", Icons.Filled.Person)
     )
-    NavigationBar (
-        modifier = modifier,
-        containerColor = colorResource(R.color.login_bg),
-        tonalElevation = 10.dp
-    ){
-        items.forEach {
-            val selected = backStackEntry.value?.destination?.route == it.route
-            NavigationBarItem(
-                selected = selected,
-                onClick = { onItemClick(it) },
-                icon = {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
-                        Icon(imageVector = it.icon, contentDescription = it.name)
-                        if (selected){
-                            Text(text = it.name)
-                        }
-                    }
-                       },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = colorResource(R.color.black),
-                    unselectedIconColor = colorResource(R.color.black),
-                    indicatorColor = colorResource(R.color.user_page_bg),
+
+    Box (
+        modifier = modifier.background(
+            brush = Brush.verticalGradient(
+                colors = listOf(
+                    colorResource(R.color.gray),
+                    colorResource(R.color.white),
+                    colorResource(R.color.fade_black)
                 )
             )
-        }
+        )
+    ){
+        NavigationBar (
+            modifier = modifier,
+            containerColor = Color.Transparent,
+            tonalElevation = 10.dp
+        ){
+            items.forEach {
+                val selected = backStackEntry.value?.destination?.route == it.route
+                NavigationBarItem(
+                    selected = selected,
+                    onClick = { onItemClick(it) },
+                    icon = {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
+                            Icon(imageVector = it.icon, contentDescription = it.name)
+                            if (selected){
+                                Text(text = it.name)
+                            }
+                        }
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = colorResource(R.color.black),
+                        unselectedIconColor = colorResource(R.color.black),
+                        indicatorColor = colorResource(R.color.gray),
+                    )
+                )
+            }
 
+        }
     }
+
 }
 @Composable
 fun CircularProgressBar(
