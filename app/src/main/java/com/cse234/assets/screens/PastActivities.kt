@@ -48,8 +48,8 @@ fun PastActivitiesScreen(activityViewModel: ActivityViewModel, navController : N
     val dailyActivities = activityViewModel.dailyActivities.collectAsState().value
 
     LaunchedEffect(activityViewModel.dailyActivities.collectAsState().value) {
-        totalDistance.value = activityViewModel.calculateTotalDistance()
-        totalDuration.value = activityViewModel.calculateTotalDuration()
+        totalDistance.value = activityViewModel.calculateTotalDistance().replace(",", ".")
+        totalDuration.value = activityViewModel.calculateTotalDuration().replace(",", ".")
         totalSteps.intValue = calculateEstimatedSteps(totalDistance.value.toDouble())
         totalCaloriesBurned.doubleValue = calculateEstimatedCaloriesBurned(totalDuration.value.toLong())
     }

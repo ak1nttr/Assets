@@ -8,10 +8,10 @@ import androidx.activity.viewModels
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.cse234.assets.screens.AboutScreen
 import com.cse234.assets.screens.ActivitiesScreen
 import com.cse234.assets.screens.ActivityHistoryScreen
 import com.cse234.assets.screens.ActivityViewModel
+import com.cse234.assets.screens.EnergyConsumptionScreen
 import com.cse234.assets.screens.PastActivitiesScreen
 import com.cse234.assets.screens.HeightWeightScreen
 import com.cse234.assets.screens.HomeScreen
@@ -20,7 +20,6 @@ import com.cse234.assets.screens.LoginScreen
 import com.cse234.assets.screens.NotificationScreen
 import com.cse234.assets.screens.PersonalInfoScreen
 import com.cse234.assets.screens.RegisterProcedure
-import com.cse234.assets.screens.SleepScreen
 import com.cse234.assets.screens.TimerScreenContent
 import com.cse234.assets.screens.TimerViewModel
 import com.cse234.assets.screens.UserProfileScreen
@@ -38,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 val activityViewModel : ActivityViewModel by viewModels()
                 NavHost(
                     navController = navController,
-                    startDestination = "HomeScreen"
+                    startDestination = "LoginScreen"
                 ){
                     composable("LoginScreen"){
                         LoginScreen(navController = navController)
@@ -76,11 +75,8 @@ class MainActivity : ComponentActivity() {
                     composable("PastActivities"){
                         PastActivitiesScreen(activityViewModel , navController)
                     }
-                    composable("SleepScreen"){
-                        SleepScreen(navController=navController)
-                    }
-                    composable("AboutScreen"){
-                        AboutScreen(navController=navController)
+                    composable("EnergyConsumptionScreen"){
+                        EnergyConsumptionScreen(activityViewModel , navController)
                     }
                 }
             }
