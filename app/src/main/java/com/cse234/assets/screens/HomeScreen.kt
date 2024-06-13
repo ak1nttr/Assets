@@ -100,13 +100,12 @@ fun HomeScreen(navController: NavHostController , activityViewModel: ActivityVie
         bottomBar = {
             BottomNavigationBar(navController = navController, onItemClick = { navController.navigate(it.route)})
         }
-    ) {innerPadding -> // innerPadding is the padding that is applied by the Scaffold
+    ) {innerPadding ->
         Column (
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .background(
-                    //    colorResource(id = R.color.home_screen_bg)
                     brush = Brush.linearGradient(
                         colors = listOf(
                             colorResource(R.color.weight_text),
@@ -168,7 +167,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
             ){
                 Text(text = "PAST ACTIVITIES" ,color= colorResource(R.color.white), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 IconButton(
-                    onClick = {  },
+                    onClick = { navController.navigate("PastActivities") },
                     modifier = Modifier.size(90.dp)
                     ) {
                     Image(painter = painterResource(id = R.drawable.running), contentDescription ="" )
@@ -207,7 +206,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                     painter = painterResource(id = R.drawable.diet),
                     contentDescription ="" ,
                     modifier = Modifier
-                        .clickable { }
+                        .clickable { navController.navigate("HeightWeightScreen")}
                         .size(80.dp)
                 )
             }
@@ -262,7 +261,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                     ambientColor = Color.Green,
                     spotColor = colorResource(id = R.color.white)
                 )
-                .clickable { navController.navigate("PastActivities") },
+                .clickable { navController.navigate("EnergyConsumptionScreen") },
             border = CardDefaults.outlinedCardBorder(),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(
@@ -279,7 +278,7 @@ private fun HomeScreenTopCard(navController: NavHostController , totalDuration :
                 Text(text = "ENERGY" , color = colorResource(R.color.energy_text),fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 Text(text = "CONSUMPTION" ,color = colorResource(R.color.energy_text), fontSize = 17.sp , fontWeight = FontWeight.Bold , fontFamily = FontFamily.SansSerif)
                 IconButton(
-                    onClick = {  },
+                    onClick = { navController.navigate("EnergyConsumptionScreen") },
                     modifier = Modifier.size(80.dp)
                 ) {
                     Image(painter = painterResource(id = R.drawable.reduce), contentDescription ="" )

@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.cse234.assets.screens.ActivitiesScreen
 import com.cse234.assets.screens.ActivityHistoryScreen
 import com.cse234.assets.screens.ActivityViewModel
+import com.cse234.assets.screens.EnergyConsumptionScreen
 import com.cse234.assets.screens.PastActivitiesScreen
 import com.cse234.assets.screens.HeightWeightScreen
 import com.cse234.assets.screens.HomeScreen
@@ -73,6 +74,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("PastActivities"){
                         PastActivitiesScreen(activityViewModel , navController)
+                    }
+                    composable("EnergyConsumptionScreen"){
+                        EnergyConsumptionScreen(activityViewModel , navController)
                     }
                 }
             }
