@@ -302,7 +302,7 @@ fun BottomNavigationBar(
         BottomNavItem("Activities", "ActivitiesScreen", Icons.Sharp.List),
         BottomNavItem("User", "UserProfileScreen", Icons.Filled.Person)
     )
-
+// ozannnnnnnn
     Box (
         modifier = modifier.background(
             brush = Brush.verticalGradient(
