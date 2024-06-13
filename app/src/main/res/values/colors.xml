@@ -28,5 +28,8 @@
     <color name="energy_text">#FEE45A</color>
     <color name="energy_bg1">#E8A975</color>
     <color name="gray">#6C6262</color>
+    <color name="key_points">#AD88C6</color>
+    <color name="tableblue">#BF8897CF</color>
+    <color name="sleepbg">#7469B6</color>
 
 </resources>

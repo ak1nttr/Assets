@@ -206,7 +206,7 @@ fun UserProfileScreen(navController : NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(text = "About")
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { navController.navigate("AboutScreen") }) {
                         Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "")
                     }
 
