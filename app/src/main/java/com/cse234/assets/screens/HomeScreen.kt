@@ -308,9 +308,10 @@ fun BottomNavigationBar(
         modifier = modifier.background(
             brush = Brush.verticalGradient(
                 colors = listOf(
-                    colorResource(R.color.gray),
-                    colorResource(R.color.white),
-                    colorResource(R.color.fade_black)
+                    colorResource(R.color.bottom1),
+                    colorResource(R.color.bottom2),
+                    colorResource(R.color.bottom3),
+                    colorResource(R.color.bottom4)
                 )
             )
         )
@@ -336,7 +337,7 @@ fun BottomNavigationBar(
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = colorResource(R.color.black),
                         unselectedIconColor = colorResource(R.color.black),
-                        indicatorColor = colorResource(R.color.gray),
+                        indicatorColor = colorResource(R.color.bottom4)
                     )
                 )
             }

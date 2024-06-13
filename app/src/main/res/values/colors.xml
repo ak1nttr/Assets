@@ -33,4 +33,24 @@
     <color name="tableblue">#BF8897CF</color>
     <color name="sleepbg">#7469B6</color>
 
+    <color name="bottom1">#FEFFD2</color>
+    <color name="bottom2">#FFEEA9</color>
+    <color name="bottom3">#FFBF78</color>
+    <color name="bottom4">#FF7D29</color>
+
+    <color name ="start_exercise1">#FFC94A</color>
+    <color name ="start_exercise2">#C08B5C</color>
+    <color name ="start_exercise3">#795458</color>
+    <color name ="start_exercise4">#D8EFD3</color>
+
+    <color name="activity_card1">#3AA6B9</color>
+    <color name="activity_card2">#7FC7D9</color>
+    <color name="activity_card3">#DCF2F1</color>
+    <color name="activity_card4">#F9F9E0</color>
+
+
+
+
+
+
 </resources>
