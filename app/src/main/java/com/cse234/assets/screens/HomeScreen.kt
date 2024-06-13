@@ -1,5 +1,6 @@
 package com.cse234.assets.screens
 
+import android.util.Log
 import android.widget.ImageButton
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -78,6 +79,7 @@ import com.cse234.assets.data.BottomNavItem
 @Composable
 fun HomeScreen(navController: NavHostController , activityViewModel: ActivityViewModel) {
     LaunchedEffect(Unit) {
+        Log.d("HomeScreen", "LaunchedEffect")
         activityViewModel.clearDailyActivities()
         activityViewModel.fetchDailyActivities()
     }
@@ -88,8 +90,8 @@ fun HomeScreen(navController: NavHostController , activityViewModel: ActivityVie
     val totalCaloriesBurned = remember { mutableDoubleStateOf(0.0) }
 
     LaunchedEffect(activityViewModel.dailyActivities.collectAsState().value) {
-        totalDistance.value = activityViewModel.calculateTotalDistance()
-        totalDuration.value = activityViewModel.calculateTotalDuration()
+        totalDistance.value = activityViewModel.calculateTotalDistance().replace(",", ".")
+        totalDuration.value = activityViewModel.calculateTotalDuration().replace(",", ".")
         totalSteps.intValue = calculateEstimatedSteps(totalDistance.value.toDouble())
         totalCaloriesBurned.doubleValue = calculateEstimatedCaloriesBurned(totalDuration.value.toLong())
     }
@@ -395,7 +397,7 @@ fun CircularProgressBar(
                     brush = Brush.linearGradient(
                         colors = listOf(
                             colorResource(R.color.teal_700),
-                            colorResource(R.color.gray),
+                            colorResource(R.color.bottom_tab_bar),
                             colorResource(R.color.sleep_bg)
                         )
                     ),
