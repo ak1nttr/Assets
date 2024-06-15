@@ -2,7 +2,6 @@ package com.cse234.assets.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,6 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.cse234.assets.R
+// calories burned will be reformatted again
+//background color will change
 
 @Composable
 fun EnergyConsumptionScreen(activityViewModel: ActivityViewModel, navController : NavHostController) {

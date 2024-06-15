@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -33,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.cse234.assets.R
-
+//a common background color for all screens in user profile screen
 @Composable
 fun NotificationScreen(navController: NavHostController) {
     Column(modifier = Modifier
@@ -69,7 +68,7 @@ fun NotificationScreen(navController: NavHostController) {
                 verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                Column() {
+                Column{
                     Text(
                         text = "Allow notifications ",
                         fontWeight = FontWeight.Bold,
